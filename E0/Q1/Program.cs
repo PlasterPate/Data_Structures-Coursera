@@ -27,15 +27,6 @@ namespace Q1
 
         public static string[] GetNames(int[] phone)
         {
-            //string[] data = new string[phone.Length]; 
-            //data = Enumerable.Repeat(string.Empty, phone.Length).ToArray();
-            //for (int i = 0; i < phone.Length; i++)
-            //{
-            //    for (int j = 0; j < D[phone[i]].Length; j++)
-            //    {
-
-            //    }
-            //}
             return GetNamesOf(phone, 0, phone.Length - 1);
         }
 
