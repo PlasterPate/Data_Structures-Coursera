@@ -20,7 +20,14 @@ namespace Q1
             List<WordCount> candidates = 
                 new List<WordCount>();
 
-            // TODO
+            var arr = CandidateGenerator.GetCandidates(misspelling);
+            foreach (var item in arr)
+            {
+                ulong count = 0;
+                if (LanguageModel.GetCount(item, out count) == true)
+                    candidates.Add(new WordCount(item, count));
+            }
+            
 
             return candidates
                     .OrderByDescending(x => x.Count)
@@ -33,9 +40,7 @@ namespace Q1
         {
             List<WordCount> candidates =
                 new List<WordCount>();
-
-            // TODO
-
+            candidates.AddRange(LanguageModel.WordCounts.Where(x => EditDistance(misspelling, x.Word) <= 1).ToList());
             return candidates
                     .OrderByDescending(x => x.Count)
                     .Select(x => x.Word)
@@ -63,10 +68,20 @@ namespace Q1
             {
                 for (int i = 1; i <= n; i++)
                 {
-                    // TODO
+                    if (str2[j - 1] == str1[i - 1])
+                        Distance[i, j] = Distance[i - 1, j - 1];
+                    else
+                        Distance[i, j] = Min(Distance[i - 1, j - 1],
+                                          Distance[i - 1, j],
+                                          Distance[i, j - 1]) + 1;
                 }
             }
             return Distance[n, m];
+        }
+
+        private static int Min(params int[] numbers)
+        {
+            return numbers.Min();
         }
     }
 }
