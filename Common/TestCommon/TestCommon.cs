@@ -34,7 +34,6 @@ namespace TestCommon
                     string expectedResult = string.Join("\n", File.ReadAllLines(outFile)
                         .Select(line => line.Trim(IgnoreChars)) // Ignore white spaces 
                         .Where(line => ! string.IsNullOrWhiteSpace(line))); // Ignore empty lines
-
                     Assert.AreEqual(expectedResult, result);
                     Console.WriteLine($"Test Passed: {inFile}");
                 }
