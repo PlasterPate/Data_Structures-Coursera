@@ -56,7 +56,7 @@ namespace A10
             long hash = 0;
             for (int i = start; i < start + count; i++)
             {
-                hash += str[i] * Pow(x, (i - start)) % p;
+                hash += str[i] * Pow(x, (i - start), p) % p;
                 hash = hash % p;
             }
             return hash % m;
