@@ -1,5 +1,7 @@
 ﻿using System;
 using TestCommon;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace A11
 {
@@ -10,10 +12,12 @@ namespace A11
         public override string Process(string inStr) =>
             TestTools.Process(inStr, (Func<long[][], bool>)Solve);
 
+        Tree tree;
 
         public bool Solve(long[][] nodes)
         {
-            return false;
+            tree = new Tree(nodes);
+            return tree.IsBst();
         }
     }    
 }

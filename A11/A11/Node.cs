@@ -1,9 +1,8 @@
 ﻿namespace A11
 {
-    internal class Node
+    public class Node
     {
         private long key;
-        private long parent;
         private long left;
         private long right;
         private bool isChecked;
@@ -21,8 +20,12 @@
             IsChecked = true;
         }
 
+        public void UnCheck()
+        {
+            IsChecked = false;
+        }
+
         public long Key { get => key; set => key = value; }
-        public long Parent { get => parent; set => parent = value; }
         public long Left { get => left; set => left = value; }
         public long Right { get => right; set => right = value; }
         public bool IsChecked { get => isChecked; set => isChecked = value; }
