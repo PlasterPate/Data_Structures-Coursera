@@ -14,30 +14,74 @@ namespace E2
         /// </summary>
         public List<int>[] Nodes;
 
+        public List<Node> Tree;
+
         public Q4TreeDiameter(int nodeCount, int seed = 0)
         {
             Nodes = GenerateRandomTree(size: nodeCount, seed: seed);
-            
+            BuildTree(Nodes, nodeCount);
+        }
+
+        public void BuildTree(List<int>[] nodes, int nodeCount)
+        {
+            Tree = new List<Node>();
+            for (int i = 0; i < nodeCount; i++)
+            {
+                Tree.Add(new Node(i));
+                Tree[i].connecteds.AddRange(Nodes[i]);
+            }
+            for (int i = 0; i < nodeCount; i++)
+            {
+                for (int j = 0; j < Nodes[i].Count; j++)
+                {
+                    Tree[Nodes[i][j]].connecteds.Add(i);
+                }
+            }
         }
 
         public int TreeHeight()
         {
-            return 0;
+            return TreeHeightFromNode(0).Item1;
         }
 
-        public int TreeHeightFromNode(int node)
+        public (int, int) TreeHeightFromNode(int node)
         {
-            return 0;
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(Tree[node]);
+            Tree[node].isChecked = true;
+            Tree[node].height = 0;
+            int maxHeight = 0;
+            Node temp = new Node(-1);
+            while (queue.Any())
+            {
+                temp = queue.Dequeue();
+                foreach(var c in temp.connecteds)
+                {
+                    if (!Tree[c].isChecked)
+                    {
+                        Tree[c].isChecked = true;
+                        Tree[c].height = temp.height + 1;
+                        maxHeight = Math.Max(maxHeight, Tree[c].height);
+                        queue.Enqueue(Tree[c]);
+                    }
+                }
+            }
+            return (maxHeight, temp.key);
         }
 
         public int TreeDiameterN2()
         {
-            return 0;
+            return TreeDiameterN();
         }
 
         public int TreeDiameterN()
         {
-            return 0;
+            int nextRoot = TreeHeightFromNode(0).Item2;
+            for (int i = 0; i < Tree.Count; i++)
+            {
+                Tree[i].isChecked = false;
+            }
+            return TreeHeightFromNode(nextRoot).Item1;
         }
 
         private static List<int>[] GenerateRandomTree(int size, int seed)
@@ -65,6 +109,22 @@ namespace E2
                 }
             }
             return nodes;
+        }
+    }
+
+    public class Node
+    {
+        public int key;
+        public int height;
+        public List<int> connecteds;
+        public bool isChecked;
+
+        public Node(int key)
+        {
+            this.key = key;
+            connecteds = new List<int>();
+            isChecked = false;
+            height = -1;
         }
     }
 }

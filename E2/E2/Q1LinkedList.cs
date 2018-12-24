@@ -45,14 +45,43 @@ namespace E2
 
         public void Reverse()
         {
-            // زحمت بکشید پیاده سازی کنید
-            // اگر نیاز بود میتوانید متد اضافه کنید
+            if(Head == Tail)
+            {
+                return;
+            }
+            else
+            {
+                var headTemp = Head;
+                var next = Head.Next;
+                    Head = next;
+                    Head.Prev = null;
+                Reverse();
+                Insert(headTemp.Key);
+            }
         }
 
         public void DeepReverse()
         {
-            // زحمت بکشید پیاده سازی کنید
-            // اگر نیاز بود میتوانید متد اضافه کنید
+            while (true)
+            {
+                var temp = Head.Key;
+                Head.Key = Tail.Key;
+                Tail.Key = temp;
+                Head = Head.Next;
+                Tail = Tail.Prev;
+                if(Head.Key == Tail.Next.Key && Head.Prev.Key == Tail.Key && Head.Prev.Prev.Key == Tail.Prev.Key && Tail.Next.Next == Head.Next)
+                {
+                    break;
+                }
+                else if(Head.Prev.Key == Tail.Next.Key && Tail.Next.Next.Key == Head.Key && Head.Prev.Prev.Key == Tail.Key)
+                {
+                    break;
+                }
+            }
+            while (Head.Prev != null)
+                Head = Head.Prev;
+            while (Tail.Next != null)
+                Tail = Tail.Next;
         }
 
         public IEnumerable<int> GetForwardEnumerator()

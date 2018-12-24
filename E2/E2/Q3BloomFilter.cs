@@ -7,35 +7,45 @@ namespace E2
     public class Q3BloomFilter
     {
         BitArray Filter;
-        Func<string, int>[] HashFunctions;
+        Func<string, long>[] HashFunctions;
 
         public Q3BloomFilter(int filterSize, int hashFnCount)
         {
-            // زحمت بکشید پیاده سازی کنید
-
             Random rnd = new Random();
+            int[] randoms = new int[hashFnCount];
             Filter = new BitArray(filterSize);
-            HashFunctions = new Func<string, int>[hashFnCount];
-
-            for (int i = 0; i < HashFunctions.Length; i++)
-            {
-                HashFunctions[i] = str => MyHashFunction(str, rnd.Next());
-            }
+            HashFunctions = new Func<string, long>[hashFnCount];
         }
 
         public int MyHashFunction(string str, int num)
         {
-            return str.GetHashCode() + num;
+            int hash = str.GetHashCode();
+            for (int i = 1; i < num; i++)
+            {
+                hash += hash.ToString().GetHashCode();
+            }
+            return Math.Abs(hash) % Filter.Length;
         }
 
         public void Add(string str)
         {
-            // زحمت بکشید پیاده سازی کنید
+            long hash = 0;
+            for (int i = 1; i <= HashFunctions.Length; i++)
+            {
+                hash = MyHashFunction(str, i);
+                Filter[(int)hash] = true;
+            }
         }
 
         public bool Test(string str)
         {
-            // زحمت بکشید پیاده سازی کنید
+            long hash = 0;
+            for (int i = 1; i <= HashFunctions.Length; i++)
+            {
+                hash = MyHashFunction(str, i);
+                if (Filter[(int)hash] == false)
+                    return false;
+            }
             return true;
         }
     }

@@ -13,6 +13,7 @@ namespace E2.Tests
     {
         [TestMethod()]
         public void Q4TreeDiameterTest()
+        
         {
             Assert.Inconclusive();
             Q4TreeDiameter td = new Q4TreeDiameter(10, 0);
@@ -21,25 +22,25 @@ namespace E2.Tests
         [TestMethod()]
         public void TreeHeightTest()
         {
-            Assert.Inconclusive();
+            Assert.Inconclusive("Solved but Not Tested");
         }
 
         [TestMethod()]
         public void TreeHeightFromNodeTest()
         {
-            Assert.Inconclusive();
+            Assert.Inconclusive("Solved but Not Tested");
         }
 
         [TestMethod()]
         public void TreeDiameterN2Test()
         {
-            Assert.Inconclusive();
+            Assert.Inconclusive("Solved but Not Tested");
         }
 
         [TestMethod()]
         public void TreeDiameterNTest()
         {
-            Assert.Inconclusive();
+            Assert.Inconclusive("Solved but Not Tested");
         }
     }
 }

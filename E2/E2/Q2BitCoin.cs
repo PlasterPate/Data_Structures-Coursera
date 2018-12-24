@@ -16,9 +16,20 @@ namespace E2
         public bool Mine(byte[] data, int difficultyLevel, out uint nonce)
         {
             Random rnd = new Random(0);
-
-            // Try one random value
-            nonce = (uint) rnd.Next(0, int.MaxValue);
+            byte[] temp = new byte[data.Length];
+            data.CopyTo(temp, 0);
+            nonce = (uint)0;
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                nonce = (uint)i;
+                BitConverter.GetBytes(nonce).CopyTo(temp, sizeof(uint));
+                byte[] doubleHashTemp = Hasher.ComputeHash(Hasher.ComputeHash(temp));
+                int zeroBytesTemp = CountEndingZeroBytes(
+                                    doubleHashTemp,
+                                    difficultyLevel);
+                if (zeroBytesTemp >= difficultyLevel)
+                    break;
+            }
 
             // Copy nonce to the end of data
             BitConverter.GetBytes(nonce).CopyTo(data, sizeof(uint));
