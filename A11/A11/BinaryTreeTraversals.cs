@@ -25,11 +25,5 @@ namespace A11
             result[2] = tree.PostOrder();
             return result;
         }
-
-        
-
-        
-
-        
     }
 }

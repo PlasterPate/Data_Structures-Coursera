@@ -12,7 +12,7 @@ namespace A11.Tests
     [TestClass()]
     public class GradedTests
     {
-        [TestMethod()]
+        [TestMethod(), Timeout(10000)]
         [DeploymentItem("TestData", "A11_TestData")]
         public void SolveTest()
         {
@@ -20,8 +20,8 @@ namespace A11.Tests
                 new BinaryTreeTraversals("TD1"),
                 new IsItBST("TD2"),
                 new IsItBSTHard("TD3"),
-                //new SetWithRageSums("TD4"),
-                //new Rope("TD5")
+                //new SetWithRageSums("TD4"), TD4_NOT_SOLVED
+                //new Rope("TD5") TD5_NOT_SOLVED
             };
 
             foreach (var p in problems)
